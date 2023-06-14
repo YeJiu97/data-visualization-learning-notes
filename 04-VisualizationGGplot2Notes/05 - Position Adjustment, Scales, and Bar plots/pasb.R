@@ -1,0 +1,95 @@
+library(tidyverse)
+
+# default
+?geom_point
+
+# 测试
+ggplot(mpg, aes(x = class, y = hwy)) + geom_point()
+
+ggplot(mpg, aes(x = class, y = hwy)) + geom_point(position = "identity")
+
+ggplot(mpg, aes(x = class, y = hwy)) +
+  geom_point(position = "jitter")
+
+ggplot(mpg, aes(x = class, y = hwy)) +
+  geom_point(position = position_jitter())
+
+ggplot(mpg, aes(x = class, y = hwy)) +
+  geom_point(position = position_jitter(seed = 123))
+
+ggplot(mpg, aes(x = class, y = hwy)) +
+  geom_point(position = position_jitter(seed = 123))
+
+ggplot(mpg, aes(x = class, y = hwy, color = class)) +
+  geom_point(position = position_jitter(seed = 123))
+
+ggplot(mpg, aes(x = class, y = hwy, color = class)) +
+  geom_point(show.legend = F)
+
+ggplot(mpg, aes(x = class, y = hwy, color = class)) +
+  geom_point(show.legend = F, position = position_jitter(
+    width = 0.5,
+    height = 0
+  ))
+
+
+# label
+x <- 1:5
+y <- x
+lab <- LETTERS[x]
+df <- data.frame(x, y, lab)
+df
+
+ggplot(df, aes(x, y)) + geom_point()
+
+ggplot(df, aes(x, y)) +
+  geom_point(size = 4, color = "lightblue") +
+  geom_text(aes(label = lab))
+
+
+# position_stack() 和 position_fill()
+ggplot(mtcars, aes(x = factor(cyl), fill = factor(vs))) +
+  geom_bar(alpha = 0.7)
+
+ggplot(mtcars, aes(x = factor(cyl), fill = factor(vs))) +
+  geom_bar(alpha = 0.7, position = "identity")
+
+?geom_bar
+
+ggplot(mtcars, aes(x = factor(cyl), fill = factor(vs))) +
+  geom_bar(alpha = 0.7, position = "fill")
+
+ggplot(mtcars, aes(x = factor(cyl), fill = factor(vs))) +
+  geom_bar(alpha = 0.7, position = position_fill(reverse = T))
+
+
+q <- ggplot(mtcars, aes(mpg, group = cyl, fill = cyl))
+q + geom_density()
+
+?geom_density
+
+q + geom_density(position = position_stack())
+q + geom_density(position = position_fill())
+
+q + geom_density(position = position_stack(), alpha = 0.7)
+
+
+p <- ggplot(mtcars, aes(factor(cyl), fill = factor(vs)))
+p + geom_bar(alpha = 0.6)
+p + geom_bar(alpha = 0.6, position = "dodge")
+
+
+# ggplot2
+ggplot(mtcars, aes(x = mpg, y = wt, color = cyl)) +
+  geom_point() +
+  theme_classic()
+
+ggplot(mtcars, aes(x = mpg, y = wt, color = factor(cyl))) +
+  geom_point() + theme_classic() +
+  scale_x_continuous() + scale_y_continuous() +
+  scale_color_discrete()
+
+
+ggplot(mtcars, aes(x = mpg, y = wt,color = cyl)) +
+  geom_point() +
+  scale_color_binned()
